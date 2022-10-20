@@ -11,7 +11,6 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.List;
 
-@Transactional
 @Service
 public class UserServiceImpl implements UserService{
 
@@ -34,6 +33,7 @@ public class UserServiceImpl implements UserService{
         return userRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void saveUser(User user) {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
@@ -45,12 +45,14 @@ public class UserServiceImpl implements UserService{
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Пользователь не найден"));
     }
 
+    @Transactional
     @Override
     public void updateUser(Long id, User user) {
         user.setId(id);
         userRepository.save(user);
     }
 
+    @Transactional
     @Override
     public void deleteByIdUsers(Long id) {
         userRepository.deleteById(id);
