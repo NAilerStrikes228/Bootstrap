@@ -11,6 +11,7 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.List;
 
+@Transactional
 @Service
 public class UserServiceImpl implements UserService{
 
@@ -34,7 +35,6 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    @Transactional
     public void saveUser(User user) {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         userRepository.save(user);
@@ -46,14 +46,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    @Transactional
     public void updateUser(Long id, User user) {
         user.setId(id);
         userRepository.save(user);
     }
 
     @Override
-    @Transactional
     public void deleteByIdUsers(Long id) {
         userRepository.deleteById(id);
     }
